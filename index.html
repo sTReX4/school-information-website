@@ -5,86 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>School Announcements - Prototype (with Weather)</title>
   <meta name="description" content="Accessible, responsive announcements feed prototype for a school information site with weather widget and urgent banner." />
-  <style>
-    :root{
-      --green-900:#143a18;
-      --green-700:#1f5a20;
-      --green-500:#2e7d32;
-      --bg:#f5f8f5;
-      --card:#ffffff;
-      --muted:#6b6b6b;
-      --radius:10px;
-      --gap:18px;
-      --max-width:1100px;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:var(--bg);color:#222;line-height:1.45}
-
-    /* Layout */
-    .container{max-width:var(--max-width);margin:26px auto;padding:18px}
-    header{background:linear-gradient(90deg,var(--green-700),var(--green-500));color:white;padding:18px;border-radius:12px;display:flex;align-items:center;gap:18px}
-    header .logo{display:flex;align-items:center;gap:12px}
-    .logo svg{width:56px;height:56px;border-radius:8px;background:rgba(255,255,255,0.08);padding:6px}
-    header h1{font-size:20px;margin:0}
-    .skip-link{position:absolute;left:-999px;top:auto;height:1px;overflow:hidden}
-    .skip-link:focus{left:8px;top:8px;height:auto;padding:8px;background:#fff;border-radius:6px;z-index:999}
-
-    /* Weather widget in header */
-    .weather-widget{margin-left:auto;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.06)}
-    .weather-icon{font-size:20px}
-    .weather-info .temp{font-weight:700}
-    .weather-info .desc{font-size:13px;color:var(--muted)}
-    @media (max-width:520px){.weather-info .desc{display:none}}
-
-    /* Urgent banner */
-    .weather-banner{background:#b71c1c;color:white;padding:10px;text-align:center;font-weight:600;border-radius:8px;margin-top:12px;display:none}
-    .weather-banner button{background:transparent;border:0;color:white;font-size:16px;cursor:pointer}
-
-    /* Controls */
-    .controls{display:flex;gap:12px;align-items:center;margin:18px 0;flex-wrap:wrap}
-    .controls input[type="search"]{padding:10px 12px;border-radius:8px;border:1px solid #ccc;min-width:220px}
-    .chips{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{background:var(--card);padding:8px 12px;border-radius:999px;border:1px solid rgba(0,0,0,0.06);cursor:pointer}
-    .chip[aria-pressed="true"]{background:var(--green-700);color:#fff;border-color:transparent}
-
-    /* Grid */
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap)}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
-
-    /* Card */
-    .card{background:var(--card);border-radius:var(--radius);overflow:hidden;display:flex;gap:12px;border:1px solid rgba(0,0,0,0.06)}
-    .card .media{flex:0 0 150px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--bg),#fff);min-height:110px}
-    .card img{max-width:92%;height:auto}
-    .card .content{padding:14px;flex:1;display:flex;flex-direction:column}
-    .meta{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:13px}
-    .title{font-size:18px;margin:6px 0 8px}
-    .excerpt{color:#333;margin-bottom:12px}
-    .badge{display:inline-block;padding:6px 8px;border-radius:8px;font-weight:600;background:var(--green-700);color:white;font-size:12px}
-    .actions{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
-    .btn{background:var(--green-700);color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
-    .btn.ghost{background:transparent;color:var(--green-700);border:1px solid rgba(31,90,32,0.12)}
-
-    /* Sidebar-ish subscription (stack on mobile) */
-    .aside{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04)}
-    .layout{display:grid;grid-template-columns:1fr 320px;gap:var(--gap);align-items:start;margin-top:12px}
-    @media (max-width:1100px){.layout{grid-template-columns:1fr}}
-
-    /* small helpers */
-    .muted{color:var(--muted);font-size:13px}
-    small.time{font-size:12px;color:var(--muted)}
-
-    /* focus styles */
-    :focus{outline:3px solid rgba(46,125,50,0.18);outline-offset:2px}
-
-    /* toast */
-    .toast{position:fixed;right:18px;bottom:18px;background:#222;color:#fff;padding:12px 16px;border-radius:8px;display:none}
-
-    /* visually-hidden for accessibility */
-    .sr-only{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
-
-  </style>
+  
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -101,14 +22,13 @@
         <div class="muted">Official announcements & events • <small>Updated live</small></div>
       </div>
 
-      <!-- Compact weather widget (always visible) -->
-      <div class="weather-widget" role="region" aria-live="polite" aria-label="Current weather">
-        <div class="weather-icon" aria-hidden="true">🌧️</div>
-        <div class="weather-info">
-          <div class="temp">29°C</div>
-          <div class="desc">Light thunderstorms • 81% humidity</div>
-        </div>
-      </div>
+      <div id="weatherWidget" class="weather-widget" aria-live="polite">
+  <div class="weather-icon">…</div>
+  <div class="weather-info">
+    <div class="temp">--°C</div>
+    <div class="desc">Loading…</div>
+  </div>
+</div>
     </header>
 
     <!-- Urgent dismissible banner (hidden by default) -->
@@ -331,17 +251,28 @@
       return '🌧️';
     }
 
-    async function loadWeather(lat, lon){
-      // This is a mocked implementation for the prototype. In production, call a server endpoint that
-      // safely proxies a weather API (do not expose API keys in client JS).
-      try{
-        // mock data
-        const d = { temp:29, desc:'Light thunderstorms', humidity:81 };
-        document.querySelector('.weather-widget .weather-icon').textContent = mapIcon('');
-        document.querySelector('.weather-widget .temp').textContent = Math.round(d.temp) + '°C';
-        document.querySelector('.weather-widget .desc').textContent = d.desc + ' • ' + d.humidity + '% humidity';
-      }catch(e){ console.warn('Weather load failed', e); }
-    }
+    async function loadWeather() {
+  try {
+    const res = await fetch('/api/weather?q=Manila'); // relative if proxy is on same domain; otherwise full URL
+    if (!res.ok) throw new Error('Weather fetch failed');
+    const d = await res.json();
+    const icon = (d.weather && d.weather[0] && d.weather[0].icon) || '';
+    // You can map icon code to emoji or use OpenWeather icon URL:
+    const iconUrl = icon ? `https://openweathermap.org/img/wn/${icon}@2x.png` : '';
+    document.querySelector('#weatherWidget .weather-icon').innerHTML =
+      iconUrl ? `<img src="${iconUrl}" alt="${d.weather[0].description}" style="width:40px;height:40px"/>` : '🌤️';
+    document.querySelector('#weatherWidget .temp').textContent = `${d.temp}°C`;
+    document.querySelector('#weatherWidget .desc').textContent =
+      `${d.weather[0].description} • ${d.humidity}% humidity`;
+  } catch (err) {
+    console.warn(err);
+    document.querySelector('#weatherWidget .temp').textContent = '--';
+    document.querySelector('#weatherWidget .desc').textContent = 'Weather unavailable';
+  }
+}
+loadWeather();
+// optional: refresh every 10 minutes
+setInterval(loadWeather, 10 * 60 * 1000);
 
     // Search & filter
     chips.forEach(ch => ch.addEventListener('click', ()=>{
