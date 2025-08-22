@@ -3,8 +3,8 @@ export default async function handler(req, res) {
   const SCHOOL_LAT = 14.3355;
   const SCHOOL_LON = 121.0316;
 
+  const KEY = process.env.OPENWEATHER_API_KEY;
   if (!KEY) return res.status(500).json({ error: 'Missing server API key' });
-  if (!(q || (lat && lon))) return res.status(400).json({ error: 'Provide q or lat+lon' });
 
   const params = new URLSearchParams({
     appid: KEY,
